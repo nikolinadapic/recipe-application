@@ -2,6 +2,7 @@ package com.example.recipeapp.converters;
 
 import com.example.recipeapp.dto.RecipeDto;
 import com.example.recipeapp.model.Recipe;
+import com.example.recipeapp.repositories.CategoryRepository;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
@@ -14,15 +15,18 @@ public class RecipeDtoToRecipe implements Converter<RecipeDto, Recipe> {
     private final IngredientDtoToIngredient ingredientConverter;
     private final NotesDtoToNotes notesConverter;
     private final CommentDtoToComment commentConverter;
+    private final CategoryRepository categoryRepository;
 
     public RecipeDtoToRecipe(CategoryDtoToCategory categoryConverter,
                              IngredientDtoToIngredient ingredientConverter,
                              NotesDtoToNotes notesConverter,
-                             CommentDtoToComment commentConverter) {
+                             CommentDtoToComment commentConverter,
+                             CategoryRepository categoryRepository) {
         this.categoryConverter = categoryConverter;
         this.ingredientConverter = ingredientConverter;
         this.notesConverter = notesConverter;
         this.commentConverter = commentConverter;
+        this.categoryRepository = categoryRepository;
     }
 
     @Synchronized
@@ -53,7 +57,13 @@ public class RecipeDtoToRecipe implements Converter<RecipeDto, Recipe> {
 
         if (recipeDto.getCategories() != null && recipeDto.getCategories().size() > 0) {
             recipeDto.getCategories().forEach(
-                    categoryDto -> recipe.getCategories().add(categoryConverter.convert(categoryDto))
+                    categoryDto -> {
+                        if (categoryRepository.findByCategoryName(categoryDto.getCategoryName()).isEmpty()) {
+                            recipe.getCategories().add(categoryConverter.convert(categoryDto));
+                        } else {
+                            recipe.getCategories().add(categoryRepository.findByCategoryName(categoryDto.getCategoryName()).get());
+                        }
+                    }
             );
         }
 

@@ -2,7 +2,7 @@ package com.example.recipeapp.converters;
 
 import com.example.recipeapp.dto.IngredientDto;
 import com.example.recipeapp.model.Ingredient;
-import com.example.recipeapp.model.Recipe;
+import com.example.recipeapp.repositories.UnitOfMeasureRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -11,9 +11,12 @@ import org.springframework.stereotype.Component;
 public class IngredientDtoToIngredient implements Converter<IngredientDto, Ingredient> {
 
     private final UnitOfMeasureDtoToUnitOfMeasure unitOfMeasureConverter;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public IngredientDtoToIngredient(UnitOfMeasureDtoToUnitOfMeasure unitOfMeasureConverter) {
+    public IngredientDtoToIngredient(UnitOfMeasureDtoToUnitOfMeasure unitOfMeasureConverter,
+                                     UnitOfMeasureRepository unitOfMeasureRepository) {
         this.unitOfMeasureConverter = unitOfMeasureConverter;
+        this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
     @Nullable
@@ -27,16 +30,14 @@ public class IngredientDtoToIngredient implements Converter<IngredientDto, Ingre
 
         ingredient.setId(ingredientDto.getId());
 
-        /*if (ingredientDto.getRecipe() != null) {
-            Recipe recipe = new Recipe();
-            recipe.setId(ingredientDto.getRecipeId());
-            ingredient.setRecipe(recipe);
-            recipe.addIngredient(ingredient);
-        }*/
-
         ingredient.setAmount(ingredientDto.getAmount());
         ingredient.setIngredientName(ingredientDto.getIngredientName());
-        ingredient.setUnitOfMeasure(unitOfMeasureConverter.convert(ingredientDto.getUnitOfMeasure()));
+
+        if (unitOfMeasureRepository.findByUnitOfMeasureName(ingredientDto.getUnitOfMeasure().getUnitOfMeasureName()).isEmpty()) {
+            ingredient.setUnitOfMeasure(unitOfMeasureConverter.convert(ingredientDto.getUnitOfMeasure()));
+        } else {
+            ingredient.setUnitOfMeasure(unitOfMeasureRepository.findByUnitOfMeasureName(ingredientDto.getUnitOfMeasure().getUnitOfMeasureName()).get());
+        }
 
         return ingredient;
     }

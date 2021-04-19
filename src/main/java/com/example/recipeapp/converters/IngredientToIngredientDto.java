@@ -28,10 +28,6 @@ public class IngredientToIngredientDto implements Converter<Ingredient, Ingredie
 
         ingredientDto.setId(ingredient.getId());
 
-        /*if (ingredient.getRecipe() != null) {
-            ingredientDto.setRecipe(ingredient.getRecipe());
-        }*/
-
         ingredientDto.setAmount(ingredient.getAmount());
         ingredientDto.setIngredientName(ingredient.getIngredientName());
         ingredientDto.setUnitOfMeasure(unitOfMeasureConverter.convert(ingredient.getUnitOfMeasure()));
