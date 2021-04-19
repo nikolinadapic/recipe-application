@@ -20,7 +20,7 @@ public class UnitOfMeasureToUnitOfMeasureDto implements Converter<UnitOfMeasure,
 
         final UnitOfMeasureDto unitOfMeasureDto = new UnitOfMeasureDto();
         unitOfMeasureDto.setId(unitOfMeasure.getId());
-        unitOfMeasure.setUnitOfMeasureName(unitOfMeasure.getUnitOfMeasureName());
+        unitOfMeasureDto.setUnitOfMeasureName(unitOfMeasure.getUnitOfMeasureName());
 
         return unitOfMeasureDto;
     }
