@@ -1,8 +1,9 @@
 package com.example.recipeapp.services;
 
+import com.example.recipeapp.model.Recipe;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
 
-    Byte[] saveImageFile(Long recipeId, MultipartFile multipartFile);
+    Recipe saveImageFile(Long recipeId, MultipartFile multipartFile);
 }

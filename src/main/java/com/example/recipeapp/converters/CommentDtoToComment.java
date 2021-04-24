@@ -6,6 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class CommentDtoToComment implements Converter<CommentDto, Comment> {
 
@@ -19,8 +21,10 @@ public class CommentDtoToComment implements Converter<CommentDto, Comment> {
         final Comment comment = new Comment();
 
         comment.setId(commentDto.getId());
-        comment.setCommentAuthor(commentDto.getCommentAuthor());
-        comment.setCommentText(commentDto.getCommentText());
+        comment.setAuthor(commentDto.getAuthor());
+        comment.setText(commentDto.getText());
+
+        comment.setTime(LocalDateTime.now());
 
         return comment;
     }

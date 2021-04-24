@@ -52,6 +52,11 @@ public class Recipe {
         }
     }
 
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setRecipe(this);
+    }
+
     public Recipe addIngredient(Ingredient ingredient) {
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);

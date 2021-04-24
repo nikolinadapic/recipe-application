@@ -2,19 +2,17 @@ package com.example.recipeapp.controllers;
 
 import com.example.recipeapp.converters.RecipeToRecipeDto;
 import com.example.recipeapp.dto.RecipeDto;
-import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.services.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Controller
+@RestController
 public class RecipeController {
 
     private final RecipeService recipeService;

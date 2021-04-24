@@ -21,8 +21,9 @@ public class CommentToCommentDto implements Converter<Comment, CommentDto> {
         final CommentDto commentDto = new CommentDto();
 
         commentDto.setId(comment.getId());
-        commentDto.setCommentAuthor(comment.getCommentAuthor());
-        commentDto.setCommentText(comment.getCommentText());
+        commentDto.setAuthor(comment.getAuthor());
+        commentDto.setText(comment.getText());
+        commentDto.setTime(comment.getTime());
 
         return commentDto;
     }

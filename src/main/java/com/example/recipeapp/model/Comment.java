@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,8 +15,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String commentAuthor;
-    private String commentText;
+    private String author;
+    private String text;
+    private LocalDateTime time;
 
     @ManyToOne()
     private Recipe recipe;

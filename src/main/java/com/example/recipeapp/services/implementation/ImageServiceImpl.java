@@ -20,14 +20,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public Byte[] saveImageFile(Long recipeId, MultipartFile multipartFile) {
-        Byte[] byteObjects = new Byte[0];
-
+    public Recipe saveImageFile(Long recipeId, MultipartFile multipartFile) {
         try {
             if (recipeRepository.findById(recipeId).isPresent()) {
                 Recipe recipe = recipeRepository.findById(recipeId).get();
 
-                byteObjects = new Byte[multipartFile.getBytes().length];
+                Byte[] byteObjects = new Byte[multipartFile.getBytes().length];
 
                 int i = 0;
                 for (byte b : multipartFile.getBytes()) {
@@ -38,13 +36,12 @@ public class ImageServiceImpl implements ImageService {
 
                 recipeRepository.save(recipe);
 
-                return byteObjects;
+                return recipe;
             }
         } catch (IOException e) {
             System.out.println("Error occurred while trying to save image file.");
             e.printStackTrace();
         }
-
-        return byteObjects;
+        return null;
     }
 }
