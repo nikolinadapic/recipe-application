@@ -7,17 +7,20 @@ import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.repositories.CommentRepository;
 import com.example.recipeapp.repositories.RecipeRepository;
 import com.example.recipeapp.services.CommentService;
-import com.example.recipeapp.services.RecipeService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final RecipeRepository recipeRepository;
+    private final CommentRepository commentRepository;
     private final CommentDtoToComment commentConverter;
 
-    public CommentServiceImpl(RecipeRepository recipeRepository, CommentDtoToComment commentConverter) {
+    public CommentServiceImpl(RecipeRepository recipeRepository, CommentRepository commentRepository, CommentDtoToComment commentConverter) {
         this.recipeRepository = recipeRepository;
+        this.commentRepository = commentRepository;
         this.commentConverter = commentConverter;
     }
 
@@ -32,5 +35,10 @@ public class CommentServiceImpl implements CommentService {
                     });
         }
         return null;
+    }
+
+    @Override
+    public List<Comment> getOrderedComments(Long recipeId) {
+        return commentRepository.findAllByRecipeIdOrderByTimeDesc(recipeId);
     }
 }

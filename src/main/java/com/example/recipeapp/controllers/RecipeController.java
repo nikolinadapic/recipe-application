@@ -1,26 +1,39 @@
 package com.example.recipeapp.controllers;
 
+import com.example.recipeapp.converters.CommentToCommentDto;
 import com.example.recipeapp.converters.RecipeToRecipeDto;
+import com.example.recipeapp.dto.CommentDto;
 import com.example.recipeapp.dto.RecipeDto;
+import com.example.recipeapp.model.Comment;
 import com.example.recipeapp.model.Recipe;
+import com.example.recipeapp.services.CommentService;
 import com.example.recipeapp.services.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final CommentService commentService;
     private final RecipeToRecipeDto recipeConverter;
+    private final CommentToCommentDto commentConverter;
 
-    public RecipeController(RecipeService recipeService, RecipeToRecipeDto recipeConverter) {
+    public RecipeController(RecipeService recipeService,
+                            CommentService commentService,
+                            RecipeToRecipeDto recipeConverter,
+                            CommentToCommentDto commentConverter) {
         this.recipeService = recipeService;
+        this.commentService = commentService;
         this.recipeConverter = recipeConverter;
+        this.commentConverter = commentConverter;
     }
 
     private Recipe updateRecipeFields(Recipe recipe, RecipeDto recipeDto) {
@@ -53,6 +66,15 @@ public class RecipeController {
         return recipe;
     }
 
+    List<CommentDto> orderComments(Long eventId) {
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment : commentService.getOrderedComments(eventId)) {
+            commentDtoList.add(commentConverter.convert(comment));
+        }
+
+        return commentDtoList;
+    }
+
     @GetMapping("recipe")
     public ResponseEntity<Set<RecipeDto>> getAllRecipes() {
         Set<RecipeDto> recipeDtoSet = new HashSet<>();
@@ -83,7 +105,10 @@ public class RecipeController {
 
     @GetMapping("recipe/{id}")
     public ResponseEntity<RecipeDto> getRecipe(@PathVariable Long id) {
-        return new ResponseEntity<>(recipeConverter.convert(recipeService.findById(id)), HttpStatus.OK);
+        RecipeDto recipeDto = recipeConverter.convert(recipeService.findById(id));
+        recipeDto.setComments(orderComments(id));
+
+        return new ResponseEntity<>(recipeDto, HttpStatus.OK);
     }
 
     @PutMapping("recipe/{id}")

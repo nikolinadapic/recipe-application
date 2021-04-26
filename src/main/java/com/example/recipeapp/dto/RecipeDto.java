@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,7 +24,7 @@ public class RecipeDto {
     private String directions;
     private Difficulty difficulty;
     private NotesDto notes;
-    private Set<CommentDto> comments = new HashSet<>();
+    private List<CommentDto> comments = new ArrayList<>();
     private Set<IngredientDto> ingredients = new HashSet<>();
     private Set<CategoryDto> categories = new HashSet<>();
 }
