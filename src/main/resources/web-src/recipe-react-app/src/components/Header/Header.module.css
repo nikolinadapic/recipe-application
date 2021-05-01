@@ -1,0 +1,25 @@
+.Header {
+    padding: 1rem;
+    background-color: #e1eedd;
+    border-bottom: 1px solid #f6c453;
+}
+
+.Nav {
+    display: flex;
+    flex-direction: row;
+}
+
+.Title {
+    margin-right: 40px;
+    font-weight: bold;
+}
+
+.Icon {
+    margin-left: auto;
+}
+
+@media (max-width: 500px) {
+    .Icon {
+        visibility: hidden;
+    }
+}
