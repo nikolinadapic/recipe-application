@@ -1,11 +1,12 @@
 import React from 'react';
 import Spinner from '../UI/Spinner/Spinner';
+import Slideshow from './Slideshow/Slideshow';
 
 const Home = props => {
     return (
-        <div style={{height: '80vh'}}>
-        <h1>Home</h1>
-        <Spinner />
+        <div>
+            <Slideshow />
+            <Spinner />
         </div>
     );
 }
