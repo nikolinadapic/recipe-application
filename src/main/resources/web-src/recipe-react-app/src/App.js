@@ -4,10 +4,12 @@ import { Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import Recipes from './components/Recipes/Recipes';
+import Recipe from './components/Recipe/Recipe';
 
 function App() {
   const routes = (
     <Switch>
+      <Route exact path="/recipe/:id" component={Recipe} />
       <Route exact path="/recipe" component={Recipes} />
       <Route exact path="/" component={Home} />
     </Switch>

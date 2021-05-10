@@ -24,3 +24,9 @@
 .Message {
     margin: 200px 40px 0 40px;
 }
+
+@media (max-width: 500px) {
+    .Link {
+        margin: 15px;
+    }
+}

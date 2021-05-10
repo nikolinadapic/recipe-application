@@ -10,12 +10,17 @@ import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 import recipesReducer from './store/reducers/recipesReducer';
-import { watchFetchAllRecipes } from './store/sagas/index';
+import recipeReducer from './store/reducers/recipeReducer';
+import {
+  watchFetchAllRecipes,
+  watchFetchSingleRecipe
+} from './store/sagas/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  allRecipes: recipesReducer
+  allRecipes: recipesReducer,
+  singleRecipe: recipeReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -25,6 +30,7 @@ const store = createStore(rootReducer, composeEnhancers(
 ));
 
 sagaMiddleware.run(watchFetchAllRecipes);
+sagaMiddleware.run(watchFetchSingleRecipe);
 
 const app = (
   <Provider store={store}>
