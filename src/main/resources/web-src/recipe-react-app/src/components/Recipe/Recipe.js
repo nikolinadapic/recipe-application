@@ -29,7 +29,6 @@ const Recipe = props => {
         singleRecipe = <Spinner />;
     }
     if (recipe !== null && !error && !loading) {
-        console.log(recipe.categories);
         let categories = [];
         for (let i = 0; i < recipe.categories.length; i++) {
             categories.push(

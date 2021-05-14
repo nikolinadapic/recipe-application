@@ -1,0 +1,27 @@
+.Cell {
+    width: 20%;
+    margin: 5px;;
+}
+
+.AllCategories {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.Category {
+    display: block;
+    text-align: left;
+    margin-left: 20%;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .Category {
+        margin-left: 0;
+    }
+
+    .AllCategories {
+        width: 100%;
+        margin-left: 0;
+    }
+}

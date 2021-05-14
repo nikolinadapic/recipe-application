@@ -88,7 +88,7 @@ public class RecipeController {
         return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
     }
 
-    @PostMapping("recipe")
+    @PostMapping("recipe/new")
     public ResponseEntity<String> createRecipe(@RequestBody RecipeDto recipeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(objectError -> {

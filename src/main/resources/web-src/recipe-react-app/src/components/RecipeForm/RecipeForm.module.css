@@ -1,0 +1,21 @@
+.ErrorMessage {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Success {
+    color: green;
+    text-align: center;
+}
+
+.CategoryTitle {
+    text-align: left;
+    margin-left: 20%;
+}
+
+@media (max-width: 600px) {    
+    .CategoryTitle {
+        margin-left: 0;
+    }
+}

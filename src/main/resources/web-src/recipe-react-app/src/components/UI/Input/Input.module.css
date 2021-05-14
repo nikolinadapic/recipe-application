@@ -5,6 +5,7 @@
 }
 
 .Label {
+    text-align: left;
     display: block;
     margin-bottom: 8px;
 }
@@ -19,19 +20,17 @@
     width: 100%;
     box-sizing: border-box;
     margin: 10px auto;
-
 }
 
 .InputElement:focus {
     outline: none;
-    background-color: #f2f2f2;
+    background-color: #e1eedd;
 }
 
 .Invalid {
     outline: none;
     border: 1px solid red;
     background-color: #ffbcbc;
-    
 }
 
 .ValidationError {
