@@ -24,5 +24,6 @@ export {
 export {
     addIngredient,
     removeIngredient,
-    changeIngredientInput
+    changeIngredientInput,
+    resetIngredients
 } from './ingredientFormActions';

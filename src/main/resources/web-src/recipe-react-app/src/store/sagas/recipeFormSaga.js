@@ -7,7 +7,8 @@ export function* submitRecipeSaga(action) {
     try {
         const response = yield axios.post('/recipe/new', action.recipeFormData);
         console.log(response);
-        yield put(actions.submitRecipeSuccess());
+        yield put(actions.submitRecipeSuccess(response));
+        yield put(actions.resetIngredients());
     } catch (error) {
         yield put(actions.submitRecipeFail(error));
     }

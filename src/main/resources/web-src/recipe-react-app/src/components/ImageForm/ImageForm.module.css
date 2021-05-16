@@ -1,0 +1,12 @@
+.ImageForm {
+    padding: 6px 10px;
+    box-sizing: border-box;
+    margin: 0 50px 50px 50px;
+    width: 100%;
+}
+
+.Title {
+    text-align: left;
+    margin: 50px;
+    color: #f0a04b;
+}

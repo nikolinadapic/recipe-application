@@ -99,7 +99,7 @@ public class RecipeController {
 
         RecipeDto savedRecipeDto = recipeService.saveRecipeDto(recipeDto);
 
-        String response = "/recipe/" + savedRecipeDto.getId();
+        String response = savedRecipeDto.getId().toString();
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

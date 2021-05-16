@@ -28,9 +28,10 @@ export const submitRecipeStart = () => {
     };
 };
 
-export const submitRecipeSuccess = () => {
+export const submitRecipeSuccess = (response) => {
     return {
-        type: actionTypes.SUBMIT_RECIPE_SUCCESS
+        type: actionTypes.SUBMIT_RECIPE_SUCCESS,
+        response: response
     };
 };
 

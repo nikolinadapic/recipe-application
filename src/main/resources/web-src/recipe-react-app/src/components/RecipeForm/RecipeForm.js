@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router';
 import * as actions from '../../store/actions/index';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
@@ -10,7 +11,7 @@ import IngredientForm from './IngredientForm/IngredientForm';
 import { IoCloseSharp } from 'react-icons/io5';
 
 const RecipeForm = props => {
-    const { recipeForm, categories, allIsValid, loading, error } = useSelector(state => state.recipeForm);
+    const { recipeForm, categories, allIsValid, loading, error, responseId } = useSelector(state => state.recipeForm);
     const { ingredients, validIngredients, allIngredientsValid } = useSelector(state => state.ingredientForm);
 
     const [clickedSubmit, setClickedSubmit] = useState(false);
@@ -46,7 +47,8 @@ const RecipeForm = props => {
         });
     }
 
-    const submitHandler = () => {
+    const submitHandler = (event) => {
+        event.preventDefault(); 
         setClickedSubmit(true);
         const formData = {
             recipeName: recipeForm.recipeName.value,
@@ -117,8 +119,7 @@ const RecipeForm = props => {
     
     return <div>
         <h2>Create a new Recipe</h2>
-        {form}
-
+        {clickedSubmit && !error && !loading ? <Redirect exact to={'/recipe/' + responseId + '/image'} /> : form}
     </div>;
 }
 

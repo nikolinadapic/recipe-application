@@ -75,7 +75,8 @@ const initialState = {
     },
     allIsValid: false,
     error: null,
-    loading: false
+    loading: false,
+    responseId: 0
 };
 
 
@@ -140,7 +141,8 @@ const submitRecipeSuccess = (state, action) => {
         recipeForm: { ...initialState.recipeForm },
         allIsValid: initialState.allIsValid,
         categories: initialState.categories,
-        selectedCategories: initialState.selectedCategories
+        selectedCategories: initialState.selectedCategories,
+        responseId: action.response.data
     };
 };
 

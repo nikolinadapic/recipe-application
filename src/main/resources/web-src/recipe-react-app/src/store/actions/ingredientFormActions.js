@@ -21,3 +21,9 @@ export const changeIngredientInput = (index, value, inputIdentifier) => {
         inputIdentifier: inputIdentifier
     };
 };
+
+export const resetIngredients = () => {
+    return {
+        type: actionTypes.RESET_INGREDIENTS
+    };
+};

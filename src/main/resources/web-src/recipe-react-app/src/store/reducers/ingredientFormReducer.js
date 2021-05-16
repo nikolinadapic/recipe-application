@@ -102,6 +102,14 @@ const changeIngredientInput = (state, action) => {
     };
 };
 
+const resetIngredients = (state, action) => {
+    return { ...state,
+        ingredients: [...initialState.ingredients],
+        validIngredients: [...initialState.validIngredients],
+        allIngredientsValid: initialState.allIngredientsValid
+    };
+};
+
 const ingredientFormReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -112,6 +120,9 @@ const ingredientFormReducer = (state = initialState, action) => {
         
         case actionTypes.CHANGE_INGREDIENT_INPUT:
             return changeIngredientInput(state, action);
+        
+        case actionTypes.RESET_INGREDIENTS:
+            return resetIngredients(state, action);
             
         default:
             return state;
