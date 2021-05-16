@@ -1,0 +1,13 @@
+.IngredientForm {
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 600px) {    
+    .IngredientForm {
+        width: 100%;
+    }
+}

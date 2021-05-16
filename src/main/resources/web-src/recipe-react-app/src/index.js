@@ -12,6 +12,7 @@ import createSagaMiddleware from 'redux-saga';
 import recipesReducer from './store/reducers/recipesReducer';
 import recipeReducer from './store/reducers/recipeReducer';
 import recipeFormReducer from './store/reducers/recipeFormReducer';
+import ingredientFormReducer from './store/reducers/ingredientFormReducer';
 import {
   watchFetchAllRecipes,
   watchFetchSingleRecipe,
@@ -23,7 +24,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   allRecipes: recipesReducer,
   singleRecipe: recipeReducer,
-  recipeForm: recipeFormReducer
+  recipeForm: recipeFormReducer,
+  ingredientForm: ingredientFormReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

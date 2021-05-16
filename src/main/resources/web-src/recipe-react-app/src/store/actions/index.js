@@ -20,3 +20,9 @@ export {
     submitRecipeSuccess,
     submitRecipeFail
 } from './recipeFormActions';
+
+export {
+    addIngredient,
+    removeIngredient,
+    changeIngredientInput
+} from './ingredientFormActions';

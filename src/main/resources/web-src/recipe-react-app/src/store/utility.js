@@ -7,7 +7,7 @@ export const checkValidity = (value, rules) => {
 
     if (rules.isGreaterThanZero) {
         const pattern = /^[1-9][0-9]*$/;
-        isValid = pattern.test(value) && isValid;
+        isValid = (pattern.test(value) || value === '') && isValid;
     }
 
     if (rules.isNonNegative) {
@@ -34,6 +34,19 @@ export const checkIfUnique = (array) => {
         }
     }
     return true;
+}
+
+export const checkAllIngredients = (ingredients) => {
+    let totalValidity = true;
+    for (let i = 0; i < ingredients.length; i++) {
+        if (ingredients[i].touchedIngredientName) {
+            totalValidity = ingredients[i].validIngredientName && totalValidity;
+        }
+        if (ingredients[i].touchedAmount) {
+            totalValidity = ingredients[i].validAmount && totalValidity;
+        }
+    }
+    return totalValidity;
 }
 
 export const inputElement = {
