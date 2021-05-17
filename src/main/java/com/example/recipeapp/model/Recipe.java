@@ -34,7 +34,9 @@ public class Recipe {
     private List<Comment> comments = new ArrayList<>();
 
     @Lob
-    private Byte[] image;
+    private byte[] imageData;
+    private String imageName;
+    private String imageContentType;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classes from './Recipe.module.css';
 import * as actions from '../../store/actions/index';
@@ -8,6 +8,11 @@ import moment from 'moment';
 
 const Recipe = props => {
     const { recipe, loading, error } = useSelector(state => state.singleRecipe);
+
+    const [showImage, setShowImage] = useState(false);
+    const [imageName, setImageName] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    const [errorImage, setErrorImage] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -19,6 +24,28 @@ const Recipe = props => {
     useEffect(() => {
         onFetchSingleRecipe(props.match.params.id);
     }, [onFetchSingleRecipe, props.match.params.id]);
+
+    const downloadImage = () => {
+        fetch('http://localhost:8080/recipe/' + props.match.params.id + '/recipeimage')
+            .then(response => {
+                if (response.headers.get('Content-Disposition') !== null) {
+                    const filename = response.headers.get('Content-Disposition').split('filename=')[1];
+                    setImageName(filename);
+
+                    response.blob().then(blob => {
+                        let url = window.URL.createObjectURL(blob);
+                        setImageUrl(url);
+
+                        let a = document.createElement('a');
+                        a.href = url;
+
+                        setShowImage(true);
+                    });
+                } else {
+                    setErrorImage(true);
+                }
+            });
+    }
 
     let singleRecipe = null;
 
@@ -48,22 +75,26 @@ const Recipe = props => {
             </div>;
 
         let comments =
-        <div>
-            {recipe.comments.map(comment => {
-                const time = moment(comment.time).format("DD MMMM YYYY, [at] hh:mm:ss a");
-                return (
-                    <div key={comment.id} className={classes.CommentBox}>
-                        <p className={classes.CommentAuthor}>{comment.author} ({time})</p>
-                        <p className={classes.CommentText}>{comment.text}</p>
-                    </div>
-                );
-            })}
-        </div>;
-
+            <div>
+                {recipe.comments.map(comment => {
+                    const time = moment(comment.time).format("DD MMMM YYYY, [at] hh:mm:ss a");
+                    return (
+                        <div key={comment.id} className={classes.CommentBox}>
+                            <p className={classes.CommentAuthor}>{comment.author} ({time})</p>
+                            <p className={classes.CommentText}>{comment.text}</p>
+                        </div>
+                    );
+                })}
+            </div>;
+        
         singleRecipe = <div className={classes.Recipe}>
             <h3>{recipe.recipeName}</h3>
             <table className={classes.Table}>
                 <tbody>
+                <tr>
+                    <td className={classes.TableLabel}>Image:</td>
+                    <td className={classes.TableContent}>{errorImage ? <p className={classes.NoImageText}>No image available.</p> : (showImage ? <img src={imageUrl} alt={imageName} /> : <button className={classes.DownloadButton} onClick={downloadImage}>Click to show image</button>)}</td>
+                </tr>
                 <tr>
                     <td className={classes.TableLabel}>Categories:</td>
                     <td className={classes.TableContent}>{categories}</td>
@@ -82,7 +113,7 @@ const Recipe = props => {
                 </tr>
                 <tr>
                     <td className={classes.TableLabel}>Cooking time:</td>
-                    <td className={classes.TableContent}>{recipe.cookingTime} min</td>
+                    <td className={classes.TableContent}>{recipe.cookingTime ? `${recipe.cookingTime} min` : ''}</td>
                 </tr>
                 <tr>
                     <td className={classes.TableLabel}>Ingredients:</td>
