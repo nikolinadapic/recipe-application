@@ -4,6 +4,7 @@ import { fetchAllRecipesSaga } from './recipesSaga';
 import { fetchSingleRecipeSaga } from './recipeSaga';
 import { submitRecipeSaga } from './recipeFormSaga';
 import { submitCommentSaga } from './commentFormSaga';
+import { deleteRecipeSaga } from './deleteRecipeSaga';
 
 export function* watchFetchAllRecipes() {
     yield takeEvery(actionTypes.FETCH_ALL_RECIPES, fetchAllRecipesSaga);
@@ -19,4 +20,8 @@ export function* watchSubmitRecipe() {
 
 export function* watchSubmitComment() {
     yield takeEvery(actionTypes.SUBMIT_COMMENT, submitCommentSaga);
+}
+
+export function* watchDeleteRecipe() {
+    yield takeEvery(actionTypes.DELETE_RECIPE, deleteRecipeSaga);
 }

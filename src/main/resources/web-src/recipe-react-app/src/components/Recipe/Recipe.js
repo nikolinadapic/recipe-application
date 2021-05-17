@@ -6,6 +6,7 @@ import Spinner from '../UI/Spinner/Spinner';
 import { IoRestaurantOutline } from 'react-icons/io5';
 import moment from 'moment';
 import CommentForm from '../CommentForm/CommentForm';
+import DeleteRecipeButton from '../DeleteRecipeButton/DeleteRecipeButton';
 
 const Recipe = props => {
     const { recipe, loading, error } = useSelector(state => state.singleRecipe);
@@ -90,6 +91,7 @@ const Recipe = props => {
         
         singleRecipe = <div className={classes.Recipe}>
             <h2>{recipe.recipeName}</h2>
+            <DeleteRecipeButton id={props.match.params.id} />
             <table className={classes.Table}>
                 <tbody>
                 <tr>

@@ -35,3 +35,10 @@ export {
     submitCommentSuccess,
     submitCommentFail
 } from './commentFormActions';
+
+export {
+    deleteRecipe,
+    deleteRecipeStart,
+    deleteRecipeSuccess,
+    deleteRecipeFail
+} from './deleteRecipeActions';
