@@ -22,7 +22,7 @@
     border: 1px solid #e1eedd;
 }
 
-.DownloadButton {
+.ImageButton {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -34,6 +34,10 @@
 
 .NoImageText {
     color: #f0a04b;
+}
+
+.Image {
+    max-width: 60vw;
 }
 
 .Categories {
@@ -54,7 +58,14 @@
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 10px;
-    width: 50%;
+    background-color: #e1eedd;
+    width: 100%;
+}
+
+.AddCommentTitle {
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 30px;
 }
 
 .CommentAuthor {
@@ -62,6 +73,7 @@
     font-style: italic;
     text-align: left;
     margin-left: 10px;
+    font-weight: bold;
 }
 
 .CommentText {
@@ -71,6 +83,8 @@
 
 .CommentsTitle {
     text-align: left;
+    border-bottom: 1px solid #f6c453;
+    margin-top: 20px;
 }
 
 @media (max-width: 500px) {
@@ -79,7 +93,6 @@
     }
 
     .CommentBox {
-        width: 100%;
         margin: 0 5px;
     }
 

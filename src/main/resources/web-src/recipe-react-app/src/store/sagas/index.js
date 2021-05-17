@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { fetchAllRecipesSaga } from './recipesSaga';
 import { fetchSingleRecipeSaga } from './recipeSaga';
 import { submitRecipeSaga } from './recipeFormSaga';
+import { submitCommentSaga } from './commentFormSaga';
 
 export function* watchFetchAllRecipes() {
     yield takeEvery(actionTypes.FETCH_ALL_RECIPES, fetchAllRecipesSaga);
@@ -14,4 +15,8 @@ export function* watchFetchSingleRecipe() {
 
 export function* watchSubmitRecipe() {
     yield takeEvery(actionTypes.SUBMIT_RECIPE, submitRecipeSaga);
+}
+
+export function* watchSubmitComment() {
+    yield takeEvery(actionTypes.SUBMIT_COMMENT, submitCommentSaga);
 }

@@ -1,6 +1,6 @@
 .App {
   text-align: center;
   color: #183a1d;
-  background-color: #fefbe9;
+  background-image: linear-gradient(to right, #fefbe9, #e1eedd);
   min-height: 100vh;
 }

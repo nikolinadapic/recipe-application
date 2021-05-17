@@ -27,3 +27,11 @@ export {
     changeIngredientInput,
     resetIngredients
 } from './ingredientFormActions';
+
+export {
+    changeCommentInput,
+    submitComment,
+    submitCommentStart,
+    submitCommentSuccess,
+    submitCommentFail
+} from './commentFormActions';

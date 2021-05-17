@@ -5,6 +5,7 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../UI/Spinner/Spinner';
 import { IoRestaurantOutline } from 'react-icons/io5';
 import moment from 'moment';
+import CommentForm from '../CommentForm/CommentForm';
 
 const Recipe = props => {
     const { recipe, loading, error } = useSelector(state => state.singleRecipe);
@@ -88,12 +89,14 @@ const Recipe = props => {
             </div>;
         
         singleRecipe = <div className={classes.Recipe}>
-            <h3>{recipe.recipeName}</h3>
+            <h2>{recipe.recipeName}</h2>
             <table className={classes.Table}>
                 <tbody>
                 <tr>
                     <td className={classes.TableLabel}>Image:</td>
-                    <td className={classes.TableContent}>{errorImage ? <p className={classes.NoImageText}>No image available.</p> : (showImage ? <img src={imageUrl} alt={imageName} /> : <button className={classes.DownloadButton} onClick={downloadImage}>Click to show image</button>)}</td>
+                    <td className={classes.TableContent}>{errorImage ? <p className={classes.NoImageText}>No image available.</p>
+                        : (showImage ? <img className={classes.Image} src={imageUrl} alt={imageName} />
+                            : <button className={classes.ImageButton} onClick={downloadImage}>Click to show image</button>)}</td>
                 </tr>
                 <tr>
                     <td className={classes.TableLabel}>Categories:</td>
@@ -135,6 +138,8 @@ const Recipe = props => {
             </table>
             <h4 className={classes.CommentsTitle}>Comments</h4>
             {comments}
+            <h4 className={classes.AddCommentTitle}>Add a comment</h4>
+            <CommentForm id={props.match.params.id} />
         </div>;
     }
 
