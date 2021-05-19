@@ -91,7 +91,7 @@ const Recipe = props => {
                     const time = moment(comment.time).format("DD MMMM YYYY, [at] hh:mm:ss a");
                     return (
                         <div key={comment.id} className={classes.CommentBox}>
-                            <p className={classes.CommentAuthor}>{comment.author} ({time})</p>
+                            <p className={classes.CommentAuthor}>{comment.author ? comment.author : 'Anonymous author'} ({time})</p>
                             <p className={classes.CommentText}>{comment.text}</p>
                         </div>
                     );
