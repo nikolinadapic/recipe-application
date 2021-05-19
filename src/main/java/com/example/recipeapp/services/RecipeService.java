@@ -16,4 +16,10 @@ public interface RecipeService {
     Recipe saveRecipe(Recipe recipe);
 
     Recipe updateRecipeFields(Recipe recipe, RecipeDto recipeDto);
+
+    Set<Recipe> getRecipesByName(String recipeName);
+
+    Set<Recipe> getRecipesByCategoryName(String categoryName);
+
+    Set<Recipe> getRecipesByIngredientName(String ingredientName);
 }

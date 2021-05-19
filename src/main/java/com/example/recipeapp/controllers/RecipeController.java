@@ -110,4 +110,40 @@ public class RecipeController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("recipe/name-search/{recipeName}")
+    public ResponseEntity<Set<RecipeDto>> getRecipesByName(@PathVariable String recipeName) {
+        if (recipeService.getRecipesByName(recipeName) != null) {
+            Set<RecipeDto> recipeDtoSet = new HashSet<>();
+            for (Recipe recipe : recipeService.getRecipesByName(recipeName)) {
+                recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+            }
+            return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("recipe/category-search/{categoryName}")
+    public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@PathVariable String categoryName) {
+        if (recipeService.getRecipesByCategoryName(categoryName) != null) {
+            Set<RecipeDto> recipeDtoSet = new HashSet<>();
+            for (Recipe recipe : recipeService.getRecipesByCategoryName(categoryName)) {
+                recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+            }
+            return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("recipe/ingredient-search/{ingredientName}")
+    public ResponseEntity<Set<RecipeDto>> getRecipesByIngredient(@PathVariable String ingredientName) {
+        if (recipeService.getRecipesByIngredientName(ingredientName) != null) {
+            Set<RecipeDto> recipeDtoSet = new HashSet<>();
+            for (Recipe recipe : recipeService.getRecipesByIngredientName(ingredientName)) {
+                recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+            }
+            return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

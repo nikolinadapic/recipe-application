@@ -131,4 +131,28 @@ public class RecipeServiceImpl implements RecipeService {
 
         return recipe;
     }
+
+    @Override
+    public Set<Recipe> getRecipesByName(String recipeName) {
+        if (recipeRepository.findAllByRecipeNameIgnoreCase(recipeName).isPresent()) {
+            return recipeRepository.findAllByRecipeNameIgnoreCase(recipeName).get();
+        }
+        return null;
+    }
+
+    @Override
+    public Set<Recipe> getRecipesByCategoryName(String categoryName) {
+        if (recipeRepository.findAllByCategories_CategoryName(categoryName).isPresent()) {
+            return recipeRepository.findAllByCategories_CategoryName(categoryName).get();
+        }
+        return null;
+    }
+
+    @Override
+    public Set<Recipe> getRecipesByIngredientName(String ingredientName) {
+        if (recipeRepository.findAllByIngredients_IngredientNameIgnoreCase(ingredientName).isPresent()) {
+            return recipeRepository.findAllByIngredients_IngredientNameIgnoreCase(ingredientName).get();
+        }
+        return null;
+    }
 }
