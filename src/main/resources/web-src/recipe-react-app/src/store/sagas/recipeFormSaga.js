@@ -13,3 +13,15 @@ export function* submitRecipeSaga(action) {
         yield put(actions.submitRecipeFail(error));
     }
 }
+
+export function* submitRecipeUpdateSaga(action) {
+    yield put(actions.submitRecipeUpdateStart());
+    try {
+        const response = yield axios.put('/recipe/' + action.id + '/update', action.recipeFormData);
+        console.log(response);
+        yield put(actions.submitRecipeUpdateSuccess());
+        yield put(actions.resetIngredients());
+    } catch (error) {
+        yield put(actions.submitRecipeUpdateFail(error));
+    }
+}

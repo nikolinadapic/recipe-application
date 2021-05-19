@@ -18,13 +18,13 @@ const DeleteRecipeButton = props => {
         [dispatch]
     );
 
-    const deleteRecipeHandler = (id) => {
+    const deleteRecipeHandler = () => {
         setClickedDelete(true);
-        onDeleteRecipe(id);
+        onDeleteRecipe(props.id);
     }
 
-    let button =error ? <p>An error occurred, could not delete.</p> : (loading ? <Spinner />
-        : <Button type="button" clicked={() => deleteRecipeHandler(props.id)}><IoTrashBinOutline /></Button>);
+    let button = error ? <p>An error occurred, could not delete.</p> : (loading ? <Spinner />
+        : <Button type="button" clicked={deleteRecipeHandler}><IoTrashBinOutline /> Delete</Button>);
 
     return (clickedDelete && !error && !loading) ? <Redirect to="/recipe" /> : button;
 }

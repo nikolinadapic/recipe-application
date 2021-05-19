@@ -27,3 +27,10 @@ export const resetIngredients = () => {
         type: actionTypes.RESET_INGREDIENTS
     };
 };
+
+export const updateIngredientForm = (currentData) => {
+    return {
+        type: actionTypes.UPDATE_INGREDIENT_FORM,
+        currentData: currentData
+    };
+};

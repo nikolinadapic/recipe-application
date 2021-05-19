@@ -4,9 +4,13 @@ import classes from './Recipe.module.css';
 import * as actions from '../../store/actions/index';
 import Spinner from '../UI/Spinner/Spinner';
 import { IoRestaurantOutline } from 'react-icons/io5';
+import { HiOutlinePhotograph } from 'react-icons/hi';
 import moment from 'moment';
 import CommentForm from '../CommentForm/CommentForm';
 import DeleteRecipeButton from '../DeleteRecipeButton/DeleteRecipeButton';
+import Button from '../UI/Button/Button';
+import { Redirect } from 'react-router';
+import UpdateRecipeButton from '../UpdateRecipeButton/UpdateRecipeButton';
 
 const Recipe = props => {
     const { recipe, loading, error } = useSelector(state => state.singleRecipe);
@@ -15,6 +19,7 @@ const Recipe = props => {
     const [imageName, setImageName] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [errorImage, setErrorImage] = useState(false);
+    const [clickedAddImage, setClickedAddImage] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -47,6 +52,10 @@ const Recipe = props => {
                     setErrorImage(true);
                 }
             });
+    }
+
+    const addImageHandler = () => {
+        setClickedAddImage(true);
     }
 
     let singleRecipe = null;
@@ -91,7 +100,11 @@ const Recipe = props => {
         
         singleRecipe = <div className={classes.Recipe}>
             <h2>{recipe.recipeName}</h2>
-            <DeleteRecipeButton id={props.match.params.id} />
+            <div className={classes.EditButtons}>
+                <DeleteRecipeButton id={props.match.params.id} />
+                <Button type="button" clicked={addImageHandler}><HiOutlinePhotograph /> Change Image</Button>
+                <UpdateRecipeButton id={props.match.params.id} currentData={recipe} />
+            </div>
             <table className={classes.Table}>
                 <tbody>
                 <tr>
@@ -134,7 +147,12 @@ const Recipe = props => {
                 </tr>
                 <tr>
                     <td className={classes.TableLabel}>Source:</td>
-                    <td className={classes.TableContent}>{recipe.sourceUrl}</td>
+                    <td className={classes.TableContent}>
+                        <a href={(recipe.sourceUrl.split('//')[0] === 'https:' || recipe.sourceUrl.split('//')[0] === 'http:')
+                            ? `${recipe.sourceUrl}` : `//${recipe.sourceUrl}`} target="_blank" rel="noreferrer">
+                            {recipe.sourceUrl}
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -145,7 +163,7 @@ const Recipe = props => {
         </div>;
     }
 
-    return (singleRecipe);
+    return (clickedAddImage ? <Redirect to={'/recipe/' + props.match.params.id + '/image'} /> : singleRecipe);
 };
 
 export default Recipe;

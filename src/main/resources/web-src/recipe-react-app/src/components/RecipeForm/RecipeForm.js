@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import * as actions from '../../store/actions/index';
@@ -11,10 +11,11 @@ import IngredientForm from './IngredientForm/IngredientForm';
 import { IoCloseSharp } from 'react-icons/io5';
 
 const RecipeForm = props => {
-    const { recipeForm, categories, allIsValid, loading, error, responseId } = useSelector(state => state.recipeForm);
+    const { recipeForm, categories, allIsValid, loading, error, responseId, isUpdate } = useSelector(state => state.recipeForm);
     const { ingredients, validIngredients, allIngredientsValid } = useSelector(state => state.ingredientForm);
 
     const [clickedSubmit, setClickedSubmit] = useState(false);
+    const [clickedUpdate, setClickedUpdate] = useState(false);
 
     const dispatch = useDispatch();
     
@@ -24,6 +25,10 @@ const RecipeForm = props => {
     );
     const onSubmitRecipe = useCallback(
         (recipeFormData) => dispatch(actions.submitRecipe(recipeFormData)),
+        [dispatch]
+    );
+    const onSubmitRecipeUpdate = useCallback(
+        (id, recipeFormData) => dispatch(actions.submitRecipeUpdate(id, recipeFormData)),
         [dispatch]
     );
     const onAddIngredient = useCallback(
@@ -38,6 +43,21 @@ const RecipeForm = props => {
         (index, value, inputIdentifier) => dispatch(actions.changeIngredientInput(index, value, inputIdentifier)),
         [dispatch]
     );
+    const onResetRecipeForm = useCallback(
+        () => dispatch(actions.resetRecipeForm()),
+        [dispatch]
+    );
+    const onResetIngredients = useCallback(
+        () => dispatch(actions.resetIngredients()),
+        [dispatch]
+    );
+
+    useEffect(() => {
+        if (!props.match.params.id) {
+            onResetRecipeForm();
+            onResetIngredients();
+        }
+    }, [onResetRecipeForm, onResetIngredients, props.match.params.id]);
 
     const formElementsArray = [];
     for (let key in recipeForm) {
@@ -63,6 +83,24 @@ const RecipeForm = props => {
             ingredients: ingredients.filter(ingredient => ingredient.ingredientName !== '' && ingredient.amount !== '')
         };
         onSubmitRecipe(formData);
+    }
+
+    const updateHandler = (event) => {
+        event.preventDefault(); 
+        setClickedUpdate(true);
+        const formData = {
+            recipeName: recipeForm.recipeName.value,
+            preparationTime: recipeForm.preparationTime.value,
+            cookingTime: recipeForm.cookingTime.value,
+            servings: recipeForm.servings.value,
+            sourceUrl: recipeForm.sourceUrl.value,
+            directions: recipeForm.directions.value,
+            difficulty: recipeForm.difficulty.value,
+            notes: { notes: recipeForm.notes.value },
+            categories: categories,
+            ingredients: ingredients.filter(ingredient => ingredient.ingredientName !== '' && ingredient.amount !== '')
+        };
+        onSubmitRecipeUpdate(props.match.params.id, formData);
     }
 
     let ingredientForm = ingredients.map(ingredient => {
@@ -91,8 +129,12 @@ const RecipeForm = props => {
         );
     });
 
+    let submitButton = isUpdate
+        ? <Button type="submit" btnType="Submit" disabled={!(allIsValid && allIngredientsValid)}>UPDATE</Button>
+        : <Button type="submit" btnType="Submit" disabled={!(allIsValid && allIngredientsValid)}>SUBMIT</Button>;
+
     let form = (
-        <form onSubmit={submitHandler}>
+        <form onSubmit={isUpdate ? updateHandler : submitHandler}>
             <h4 className={classes.Title}>Ingredients</h4>
             {ingredientForm}
             <Button type="button" btnType="SimpleButton" clicked={onAddIngredient}>Add another ingredient</Button>
@@ -113,13 +155,21 @@ const RecipeForm = props => {
             <Categories />
             {clickedSubmit && !error && !loading ? <p className={classes.Success}>Recipe submitted successfully!</p> : null}
             {clickedSubmit && error && !loading ? <p className={classes.ErrorMessage}>{error.message}</p> : null}
-            {loading ? <Spinner /> : <Button type="submit" btnType="Submit" disabled={!(allIsValid && allIngredientsValid)}>SUBMIT</Button>}
+            {loading ? <Spinner /> : submitButton}
         </form>
     );
+
+    let redirect = null;
+    if (clickedSubmit && !error && !loading) {
+        redirect = <Redirect exact to={'/recipe/' + responseId + '/image'} />;
+    }
+    if (clickedUpdate && !error && !loading) {
+        redirect = <Redirect exact to={'/recipe/' + props.match.params.id} />;
+    }
     
     return <div>
-        <h2>Create a new Recipe</h2>
-        {clickedSubmit && !error && !loading ? <Redirect exact to={'/recipe/' + responseId + '/image'} /> : form}
+        {isUpdate ? <h2>Update Recipe</h2> : <h2>Create a new Recipe</h2>}
+        {redirect ? redirect : form}
     </div>;
 }
 

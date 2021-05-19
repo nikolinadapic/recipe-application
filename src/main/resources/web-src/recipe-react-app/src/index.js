@@ -19,6 +19,7 @@ import {
   watchFetchAllRecipes,
   watchFetchSingleRecipe,
   watchSubmitRecipe,
+  watchSubmitRecipeUpdate,
   watchSubmitComment,
   watchDeleteRecipe
 } from './store/sagas/index';
@@ -43,6 +44,7 @@ const store = createStore(rootReducer, composeEnhancers(
 sagaMiddleware.run(watchFetchAllRecipes);
 sagaMiddleware.run(watchFetchSingleRecipe);
 sagaMiddleware.run(watchSubmitRecipe);
+sagaMiddleware.run(watchSubmitRecipeUpdate);
 sagaMiddleware.run(watchSubmitComment);
 sagaMiddleware.run(watchDeleteRecipe);
 

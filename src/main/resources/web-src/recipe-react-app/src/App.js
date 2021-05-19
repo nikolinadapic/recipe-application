@@ -12,6 +12,7 @@ function App() {
   const routes = (
     <Switch>
       <Route exact path="/recipe/new" component={RecipeForm} />
+      <Route exact path="/recipe/:id/update" component={RecipeForm} />
       <Route exact path="/recipe/:id/image" component={ImageForm} />
       <Route exact path="/recipe/:id" component={Recipe} />
       <Route exact path="/recipe" component={Recipes} />

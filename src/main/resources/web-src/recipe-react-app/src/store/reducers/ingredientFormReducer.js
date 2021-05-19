@@ -110,6 +110,28 @@ const resetIngredients = (state, action) => {
     };
 };
 
+const updateIngredientForm = (state, action) => {
+    return { ...initialState,
+        ingredients: action.currentData.ingredients.map(ingredient => {
+            const updatedIngredient = {
+                ingredientName: ingredient.ingredientName,
+                amount: ingredient.amount,
+                unitOfMeasure: { unitOfMeasureName: ingredient.unitOfMeasure.unitOfMeasureName }
+            };
+            return updatedIngredient;
+        }),
+        validIngredients: action.currentData.ingredients.map(ingredient => {
+            return {
+                validIngredientName: true,
+                validAmount: true,
+                touchedIngredientName: true,
+                touchedAmount: true
+            }
+        }),
+        allIngredientsValid: true
+    };
+};
+
 const ingredientFormReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -123,6 +145,9 @@ const ingredientFormReducer = (state = initialState, action) => {
         
         case actionTypes.RESET_INGREDIENTS:
             return resetIngredients(state, action);
+        
+        case actionTypes.UPDATE_INGREDIENT_FORM:
+            return updateIngredientForm(state, action);
             
         default:
             return state;

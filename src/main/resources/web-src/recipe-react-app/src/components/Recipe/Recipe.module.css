@@ -3,6 +3,12 @@
     margin-right: 80px;
 }
 
+.EditButtons {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-left: 5px;
+}
+
 .Table {
     width: 100%;
     border-spacing: 5px;
@@ -30,6 +36,7 @@
     background-color: transparent;
     border: none;
     color: #183a1d;
+    text-align: left;
 }
 
 .NoImageText {

@@ -2,7 +2,7 @@ import { takeEvery } from 'redux-saga/effects';
 import * as actionTypes from '../actions/actionTypes';
 import { fetchAllRecipesSaga } from './recipesSaga';
 import { fetchSingleRecipeSaga } from './recipeSaga';
-import { submitRecipeSaga } from './recipeFormSaga';
+import { submitRecipeSaga, submitRecipeUpdateSaga } from './recipeFormSaga';
 import { submitCommentSaga } from './commentFormSaga';
 import { deleteRecipeSaga } from './deleteRecipeSaga';
 
@@ -16,6 +16,10 @@ export function* watchFetchSingleRecipe() {
 
 export function* watchSubmitRecipe() {
     yield takeEvery(actionTypes.SUBMIT_RECIPE, submitRecipeSaga);
+}
+
+export function* watchSubmitRecipeUpdate() {
+    yield takeEvery(actionTypes.SUBMIT_RECIPE_UPDATE, submitRecipeUpdateSaga);
 }
 
 export function* watchSubmitComment() {

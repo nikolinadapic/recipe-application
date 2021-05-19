@@ -83,7 +83,7 @@ public class RecipeController {
         return new ResponseEntity<>(recipeDto, HttpStatus.OK);
     }
 
-    @PutMapping("recipe/{id}")
+    @PutMapping("recipe/{id}/update")
     public ResponseEntity<RecipeDto> updateRecipe(@RequestBody RecipeDto recipeDto,
                                                   @PathVariable Long id,
                                                   BindingResult bindingResult) {

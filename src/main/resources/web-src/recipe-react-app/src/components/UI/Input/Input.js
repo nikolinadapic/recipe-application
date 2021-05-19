@@ -72,7 +72,7 @@ Input.propTypes = {
         type: PropTypes.string,
         placeholder: PropTypes.string
     }).isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     changed: PropTypes.func.isRequired,
     label: PropTypes.string
 };

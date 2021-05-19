@@ -18,14 +18,21 @@ export {
     submitRecipe,
     submitRecipeStart,
     submitRecipeSuccess,
-    submitRecipeFail
+    submitRecipeFail,
+    resetRecipeForm,
+    updateRecipeForm,
+    submitRecipeUpdate,
+    submitRecipeUpdateStart,
+    submitRecipeUpdateSuccess,
+    submitRecipeUpdateFail
 } from './recipeFormActions';
 
 export {
     addIngredient,
     removeIngredient,
     changeIngredientInput,
-    resetIngredients
+    resetIngredients,
+    updateIngredientForm
 } from './ingredientFormActions';
 
 export {

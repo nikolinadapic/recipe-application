@@ -23,7 +23,7 @@ class ImageForm extends Component {
             this.setState({ loading: false });
             if(res.ok) {
                 console.log(res.data);
-                alert("File uploaded successfully.")
+                alert("File uploaded successfully.");
             }
         });
       }

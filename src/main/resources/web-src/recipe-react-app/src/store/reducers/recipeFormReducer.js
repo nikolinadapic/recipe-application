@@ -17,7 +17,7 @@ const initialState = {
         cookingTime: { ...inputElement,
             label: 'Cooking time',
             elementConfig: { ...inputElement.elementConfig, type: 'number', placeholder: 'Time in minutes' },
-            validation: { ...inputElement.validation, isRequired: false, isNonNegative: true },
+            validation: { ...inputElement.validation, required: false, isNonNegative: true },
             valid: true,
             errorMessage: 'Cooking time cannot be negative.'
         },
@@ -30,8 +30,9 @@ const initialState = {
         sourceUrl: { ...inputElement,
             label: 'Source URL',
             elementConfig: { ...inputElement.elementConfig, placeholder: 'e.g. www.example.com' },
-            validation: {},
-            valid: true
+            validation: { ...inputElement.validation, required: false, isUrl: true },
+            valid: true,
+            errorMessage: 'Please, enter a valid URL.'
         },
         directions: { ...inputElement,
             label: 'Directions*',
@@ -76,7 +77,8 @@ const initialState = {
     allIsValid: false,
     error: null,
     loading: false,
-    responseId: 0
+    responseId: 0,
+    isUpdate: false
 };
 
 
@@ -150,6 +152,98 @@ const submitRecipeFail = (state, action) => {
     return { ...state, loading: false, error: action.error };
 };
 
+const resetRecipeForm = (state, action) => {
+    return { ...state,
+        error: null,
+        loading: false,
+        recipeForm: { ...initialState.recipeForm },
+        allIsValid: initialState.allIsValid,
+        categories: initialState.categories,
+        selectedCategories: initialState.selectedCategories,
+        responseId: initialState.responseId,
+        isUpdate: initialState.isUpdate
+    };
+};
+
+const updateRecipeForm = (state, action) => {
+    let selectedCategories = {};
+    action.currentData.categories.forEach(category => {
+        selectedCategories = { ...selectedCategories, [category.categoryName]: true };
+    });
+    return { ...initialState,
+        recipeForm: { ...initialState.recipeForm,
+            recipeName: { ...initialState.recipeForm.recipeName,
+                value: action.currentData.recipeName,
+                valid: true,
+                touched: true
+            },
+            preparationTime: { ...initialState.recipeForm.preparationTime,
+                value: action.currentData.preparationTime,
+                valid: true,
+                touched: true
+            },
+            cookingTime: { ...initialState.recipeForm.cookingTime,
+                value: action.currentData.cookingTime,
+                valid: true,
+                touched: true
+            },
+            servings: { ...initialState.recipeForm.servings,
+                value: action.currentData.servings,
+                valid: true,
+                touched: true
+            },
+            sourceUrl: { ...initialState.recipeForm.sourceUrl,
+                value: action.currentData.sourceUrl,
+                valid: true,
+                touched: true
+            },
+            directions: { ...initialState.recipeForm.directions,
+                value: action.currentData.directions,
+                valid: true,
+                touched: true
+            },
+            difficulty: { ...initialState.recipeForm.difficulty,
+                value: action.currentData.difficulty,
+                valid: true,
+                touched: true
+            },
+            notes: { ...initialState.recipeForm.notes,
+                value: action.currentData.notes.notes,
+                valid: true,
+                touched: true
+            }
+        },
+        categories: action.currentData.categories.map(category => {
+            const updatedCategory = { categoryName: category.categoryName };
+            return updatedCategory;
+        }),
+        selectedCategories: { ...initialState.selectedCategories, ...selectedCategories },
+        allIsValid: true,
+        isUpdate: true
+    };
+};
+
+const submitRecipeUpdateStart = (state, action) => {
+    return { ...state, loading: true };
+};
+
+const submitRecipeUpdateSuccess = (state, action) => {
+    return { ...state,
+        error: null,
+        loading: false,
+        recipeForm: { ...initialState.recipeForm },
+        allIsValid: initialState.allIsValid,
+        categories: initialState.categories,
+        selectedCategories: initialState.selectedCategories,
+        responseId: initialState.responseId,
+        isUpdate: false
+    };
+};
+
+const submitRecipeUpdateFail = (state, action) => {
+    return { ...state, loading: false, error: action.error };
+};
+
 const recipeFormReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CHANGE_RECIPE_INPUT:
@@ -166,6 +260,21 @@ const recipeFormReducer = (state = initialState, action) => {
         
         case actionTypes.SUBMIT_RECIPE_FAIL:
             return submitRecipeFail(state, action);
+        
+        case actionTypes.RESET_RECIPE_FORM:
+            return resetRecipeForm(state, action);
+        
+        case actionTypes.UPDATE_RECIPE_FORM:
+            return updateRecipeForm(state, action);
+        
+        case actionTypes.SUBMIT_RECIPE_UPDATE_START:
+            return submitRecipeUpdateStart(state, action);
+        
+        case actionTypes.SUBMIT_RECIPE_UPDATE_SUCCESS:
+            return submitRecipeUpdateSuccess(state, action);
+        
+        case actionTypes.SUBMIT_RECIPE_UPDATE_FAIL:
+            return submitRecipeUpdateFail(state, action);
         
         default:
             return state;
