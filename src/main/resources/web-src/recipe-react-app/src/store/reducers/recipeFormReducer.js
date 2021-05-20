@@ -72,7 +72,7 @@ const initialState = {
         Mediterranean: false,
         Grill: false,
         Chinese: false,
-        Nonbaked: false
+        Raw: false
     },
     allIsValid: false,
     error: null,

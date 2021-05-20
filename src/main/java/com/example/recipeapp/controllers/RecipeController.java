@@ -123,13 +123,39 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("recipe/category-search/{categoryName}")
-    public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@PathVariable String categoryName) {
-        if (recipeService.getRecipesByCategoryName(categoryName) != null) {
-            Set<RecipeDto> recipeDtoSet = new HashSet<>();
-            for (Recipe recipe : recipeService.getRecipesByCategoryName(categoryName)) {
-                recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+    @GetMapping("recipe/category-search")
+    public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@RequestParam boolean Desert,
+                                                               @RequestParam boolean Vegan,
+                                                               @RequestParam boolean Meat,
+                                                               @RequestParam boolean Fish,
+                                                               @RequestParam boolean Mexican,
+                                                               @RequestParam boolean Mediterranean,
+                                                               @RequestParam boolean Grill,
+                                                               @RequestParam boolean Chinese,
+                                                               @RequestParam boolean Raw) {
+        Map<String, Boolean> categories = new HashMap<>();
+        categories.put("Desert", Desert);
+        categories.put("Vegan", Vegan);
+        categories.put("Meat", Meat);
+        categories.put("Fish", Fish);
+        categories.put("Mexican", Mexican);
+        categories.put("Mediterranean", Mediterranean);
+        categories.put("Grill", Grill);
+        categories.put("Chinese", Chinese);
+        categories.put("Raw", Raw);
+
+        Set<RecipeDto> recipeDtoSet = new HashSet<>();
+        for (Map.Entry<String, Boolean> category : categories.entrySet()) {
+            if (category.getValue()) {
+                if (recipeService.getRecipesByCategoryName(category.getKey()) != null) {
+                    for (Recipe recipe : recipeService.getRecipesByCategoryName(category.getKey())) {
+                        recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+                    }
+                }
             }
+        }
+
+        if (recipeDtoSet.size() > 0) {
             return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -71,8 +71,8 @@ const Categories = props => {
                 </td>
                 <td className={classes.Cell}>
                     <label className={classes.Category}>
-                        <input type="checkbox" value="Nonbaked" checked={selectedCategories.Nonbaked} onChange={() => onSelectCategory("Nonbaked")} />
-                        Nonbaked
+                        <input type="checkbox" value="Raw" checked={selectedCategories.Raw} onChange={() => onSelectCategory("Raw")} />
+                        Raw
                     </label>
                 </td>
             </tr>

@@ -6,7 +6,7 @@ INSERT INTO category (category_name) VALUES ('Mexican');
 INSERT INTO category (category_name) VALUES ('Mediterranean');
 INSERT INTO category (category_name) VALUES ('Grill');
 INSERT INTO category (category_name) VALUES ('Chinese');
-INSERT INTO category (category_name) VALUES ('Non-baked');
+INSERT INTO category (category_name) VALUES ('Raw');
 
 INSERT INTO unit_of_measure (unit_of_measure_name) VALUES ('Teaspoon');
 INSERT INTO unit_of_measure (unit_of_measure_name) VALUES ('Tablespoon');
