@@ -15,13 +15,17 @@ import recipeFormReducer from './store/reducers/recipeFormReducer';
 import ingredientFormReducer from './store/reducers/ingredientFormReducer';
 import commentFormReducer from './store/reducers/commentFormReducer';
 import deleteRecipeReducer from './store/reducers/deleteRecipeReducer';
+import recipesSearchReducer from './store/reducers/recipesSearchReducer';
 import {
   watchFetchAllRecipes,
   watchFetchSingleRecipe,
   watchSubmitRecipe,
   watchSubmitRecipeUpdate,
   watchSubmitComment,
-  watchDeleteRecipe
+  watchDeleteRecipe,
+  watchSubmitNameSearch,
+  watchSubmitIngredientSearch,
+  watchSubmitCategoriesSearch
 } from './store/sagas/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -32,7 +36,8 @@ const rootReducer = combineReducers({
   recipeForm: recipeFormReducer,
   ingredientForm: ingredientFormReducer,
   commentForm: commentFormReducer,
-  deleteRecipe: deleteRecipeReducer
+  deleteRecipe: deleteRecipeReducer,
+  recipesSearch: recipesSearchReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -47,6 +52,9 @@ sagaMiddleware.run(watchSubmitRecipe);
 sagaMiddleware.run(watchSubmitRecipeUpdate);
 sagaMiddleware.run(watchSubmitComment);
 sagaMiddleware.run(watchDeleteRecipe);
+sagaMiddleware.run(watchSubmitNameSearch);
+sagaMiddleware.run(watchSubmitIngredientSearch);
+sagaMiddleware.run(watchSubmitCategoriesSearch);
 
 const app = (
   <Provider store={store}>

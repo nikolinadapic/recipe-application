@@ -22,7 +22,11 @@
 }
 
 .Message {
-    margin: 200px 40px 0 40px;
+    margin: 100px 40px 0 40px;
+}
+
+.Table {
+    width: 100%;
 }
 
 @media (max-width: 500px) {

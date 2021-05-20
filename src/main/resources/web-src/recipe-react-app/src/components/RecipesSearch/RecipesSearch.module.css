@@ -1,0 +1,78 @@
+.SearchInput {
+    outline: none;
+    border: 1px solid #f6c453;
+    background-color: #fefbe9;
+    font: inherit;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+
+.SearchInput:focus {
+    outline: none;
+    background-color: #e1eedd;
+}
+
+.SearchButton {
+    background-color: transparent;
+    color: #183a1d;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 3px;
+    padding: 7px;
+}
+
+.SearchButton:hover {
+    background-color: #f6c453;
+}
+
+.SearchButton:disabled {
+    cursor: not-allowed;
+}
+
+.CategoriesSearchButton {
+    background-color: transparent;
+    color: #183a1d;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 3px;
+    padding: 7px;
+    margin-left: 50%;
+}
+
+.CategoriesSearchButton:hover {
+    background-color: #f6c453;
+}
+
+.CategoriesBackButton {
+    background-color: transparent;
+    color: #183a1d;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 3px;
+    padding: 7px;
+    margin-right: 45%;
+}
+
+.CategoriesBackButton:hover {
+    background-color: #f6c453;
+}
+
+.SearchBox {
+    margin-top: 10px;
+}
+
+@media (max-width: 500px) {
+    .CategoriesBackButton {
+        margin-right: 75%;
+    }
+
+    .CategoriesSearchButton {
+        margin-left: 60%;
+    }
+}

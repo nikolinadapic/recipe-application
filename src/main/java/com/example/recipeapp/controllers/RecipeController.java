@@ -149,16 +149,15 @@ public class RecipeController {
             if (category.getValue()) {
                 if (recipeService.getRecipesByCategoryName(category.getKey()) != null) {
                     for (Recipe recipe : recipeService.getRecipesByCategoryName(category.getKey())) {
-                        recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
+                        RecipeDto foundRecipe = recipeToRecipeDto.convert(recipe);
+                        if (!recipeDtoSet.contains(foundRecipe)) {
+                            recipeDtoSet.add(foundRecipe);
+                        }
                     }
                 }
             }
         }
-
-        if (recipeDtoSet.size() > 0) {
-            return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
     }
 
     @GetMapping("recipe/ingredient-search/{ingredientName}")

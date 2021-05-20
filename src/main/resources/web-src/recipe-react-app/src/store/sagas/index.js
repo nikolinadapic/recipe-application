@@ -5,6 +5,7 @@ import { fetchSingleRecipeSaga } from './recipeSaga';
 import { submitRecipeSaga, submitRecipeUpdateSaga } from './recipeFormSaga';
 import { submitCommentSaga } from './commentFormSaga';
 import { deleteRecipeSaga } from './deleteRecipeSaga';
+import { submitCategoriesSearchSaga, submitIngredientSearchSaga, submitNameSearchSaga } from './recipesSearchSaga';
 
 export function* watchFetchAllRecipes() {
     yield takeEvery(actionTypes.FETCH_ALL_RECIPES, fetchAllRecipesSaga);
@@ -28,4 +29,16 @@ export function* watchSubmitComment() {
 
 export function* watchDeleteRecipe() {
     yield takeEvery(actionTypes.DELETE_RECIPE, deleteRecipeSaga);
+}
+
+export function* watchSubmitNameSearch() {
+    yield takeEvery(actionTypes.SUBMIT_NAME_SEARCH, submitNameSearchSaga);
+}
+
+export function* watchSubmitIngredientSearch() {
+    yield takeEvery(actionTypes.SUBMIT_INGREDIENT_SEARCH, submitIngredientSearchSaga);
+}
+
+export function* watchSubmitCategoriesSearch() {
+    yield takeEvery(actionTypes.SUBMIT_CATEGORIES_SEARCH, submitCategoriesSearchSaga);
 }

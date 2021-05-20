@@ -27,4 +27,19 @@ public class RecipeDto {
     private List<CommentDto> comments = new ArrayList<>();
     private Set<IngredientDto> ingredients = new HashSet<>();
     private Set<CategoryDto> categories = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RecipeDto recipeDto = (RecipeDto) o;
+
+        return id.equals(recipeDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
