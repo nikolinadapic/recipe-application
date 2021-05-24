@@ -111,7 +111,7 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("recipe/name-search/{recipeName}")
+    @GetMapping("recipe/search/name/{recipeName}")
     public ResponseEntity<Set<RecipeDto>> getRecipesByName(@PathVariable String recipeName) {
         if (recipeService.getRecipesByName(recipeName) != null) {
             Set<RecipeDto> recipeDtoSet = new HashSet<>();
@@ -123,7 +123,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("recipe/category-search")
+    @GetMapping("recipe/search/categories")
     public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@RequestParam boolean Desert,
                                                                @RequestParam boolean Vegan,
                                                                @RequestParam boolean Meat,
@@ -148,19 +148,27 @@ public class RecipeController {
         for (Map.Entry<String, Boolean> category : categories.entrySet()) {
             if (category.getValue()) {
                 if (recipeService.getRecipesByCategoryName(category.getKey()) != null) {
+                    Set<RecipeDto> recipeDtoSetForCurrentCategory = new HashSet<>();
                     for (Recipe recipe : recipeService.getRecipesByCategoryName(category.getKey())) {
                         RecipeDto foundRecipe = recipeToRecipeDto.convert(recipe);
+                        if (!recipeDtoSetForCurrentCategory.contains(foundRecipe)) {
+                            recipeDtoSetForCurrentCategory.add(foundRecipe);
+                        }
                         if (!recipeDtoSet.contains(foundRecipe)) {
                             recipeDtoSet.add(foundRecipe);
                         }
                     }
+                    if (!Collections.disjoint(recipeDtoSet, recipeDtoSetForCurrentCategory)) {
+                        recipeDtoSetForCurrentCategory.retainAll(recipeDtoSet);
+                    }
+                    recipeDtoSet.retainAll(recipeDtoSetForCurrentCategory);
                 }
             }
         }
         return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
     }
 
-    @GetMapping("recipe/ingredient-search/{ingredientName}")
+    @GetMapping("recipe/search/ingredient/{ingredientName}")
     public ResponseEntity<Set<RecipeDto>> getRecipesByIngredient(@PathVariable String ingredientName) {
         if (recipeService.getRecipesByIngredientName(ingredientName) != null) {
             Set<RecipeDto> recipeDtoSet = new HashSet<>();

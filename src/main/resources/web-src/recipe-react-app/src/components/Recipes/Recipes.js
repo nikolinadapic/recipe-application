@@ -20,11 +20,16 @@ const Recipes = props => {
         () => dispatch(actions.exitSearch()),
         [dispatch]
     );
+    const onResetRecipeForm = useCallback(
+        () => dispatch(actions.resetRecipeForm()),
+        [dispatch]
+    );
 
     useEffect(() => {
         onExitSearch();
+        onResetRecipeForm();
         onFetchAllRecipes();
-    }, [onExitSearch, onFetchAllRecipes]);
+    }, [onExitSearch, onResetRecipeForm, onFetchAllRecipes]);
 
     let allRecipes = recipes.length === 0 ? <p className={classes.Message}>No recipes yet! Please, create a new recipe to show it here.</p>
         : recipes.map((recipe) => {

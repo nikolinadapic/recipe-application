@@ -5,7 +5,7 @@ import * as actions from '../actions/index';
 export function* submitNameSearchSaga(action) {
     yield put(actions.submitSearchStart());
     try {
-        const response = yield axios.get('/recipe/name-search/' + action.name);
+        const response = yield axios.get('/recipe/search/name/' + action.name);
         const allRecipes = response.data;
         console.log(response);
         const updatedRecipes = allRecipes.map(recipe => {
@@ -22,7 +22,7 @@ export function* submitNameSearchSaga(action) {
 export function* submitIngredientSearchSaga(action) {
     yield put(actions.submitSearchStart());
     try {
-        const response = yield axios.get('/recipe/ingredient-search/' + action.ingredient);
+        const response = yield axios.get('/recipe/search/ingredient/' + action.ingredient);
         const allRecipes = response.data;
         console.log(response);
         const updatedRecipes = allRecipes.map(recipe => {
@@ -39,7 +39,7 @@ export function* submitIngredientSearchSaga(action) {
 export function* submitCategoriesSearchSaga(action) {
     yield put(actions.submitSearchStart());
     try {
-        const response = yield axios.get('/recipe/category-search' + action.categoriesParams);
+        const response = yield axios.get('/recipe/search/categories' + action.categoriesParams);
         const allRecipes = response.data;
         console.log(response);
         const updatedRecipes = allRecipes.map(recipe => {
