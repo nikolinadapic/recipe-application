@@ -123,7 +123,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //fix search by categories
+    //fix search by categories (when searching by multiple categories
     @GetMapping("recipe/search/categories")
     public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@RequestParam boolean Desert,
                                                                @RequestParam boolean Vegan,
