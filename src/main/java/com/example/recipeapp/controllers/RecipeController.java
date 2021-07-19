@@ -123,7 +123,6 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //fix search by categories (when searching by multiple categories
     @GetMapping("recipe/search/categories")
     public ResponseEntity<Set<RecipeDto>> getRecipesByCategory(@RequestParam boolean Desert,
                                                                @RequestParam boolean Vegan,
@@ -151,22 +150,15 @@ public class RecipeController {
                 if (recipeService.getRecipesByCategoryName(category.getKey()) != null) {
                     Set<RecipeDto> recipeDtoSetForCurrentCategory = new HashSet<>();
                     for (Recipe recipe : recipeService.getRecipesByCategoryName(category.getKey())) {
-                        RecipeDto foundRecipe = recipeToRecipeDto.convert(recipe);
-                        if (!recipeDtoSetForCurrentCategory.contains(foundRecipe)) {
-                            recipeDtoSetForCurrentCategory.add(foundRecipe);
-                        }
-                        if (!recipeDtoSet.contains(foundRecipe)) {
-                            recipeDtoSet.add(foundRecipe);
-                        }
+                        recipeDtoSet.add(recipeToRecipeDto.convert(recipe));
                     }
-                    if (!Collections.disjoint(recipeDtoSet, recipeDtoSetForCurrentCategory)) {
-                        recipeDtoSetForCurrentCategory.retainAll(recipeDtoSet);
-                    }
-                    recipeDtoSet.retainAll(recipeDtoSetForCurrentCategory);
                 }
             }
         }
-        return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
+        if (recipeDtoSet.size() > 0) {
+            return new ResponseEntity<>(recipeDtoSet, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("recipe/search/ingredient/{ingredientName}")
